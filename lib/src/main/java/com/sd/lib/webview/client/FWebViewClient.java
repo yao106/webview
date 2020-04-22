@@ -57,7 +57,35 @@ public class FWebViewClient extends WebViewClient
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error)
     {
-        handler.proceed();
+        final SslErrorHandler mHandler ;
+        mHandler = handler;
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage("ssl证书验证失败");
+        builder.setPositiveButton("继续", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mHandler.proceed();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mHandler.cancel();
+            }
+        });
+        builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    mHandler.cancel();
+                    dialog.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     //---------- Override end ----------
