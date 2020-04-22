@@ -1,11 +1,14 @@
 package com.sd.lib.webview.client;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -59,7 +62,7 @@ public class FWebViewClient extends WebViewClient
     {
         final SslErrorHandler mHandler ;
         mHandler = handler;
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("ssl证书验证失败");
         builder.setPositiveButton("继续", new DialogInterface.OnClickListener() {
             @Override
