@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import android.webkit.GeolocationPermissions;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -51,6 +52,12 @@ public class FWebChromeClient extends WebChromeClient
     }
 
     //---------- Override end ----------
+
+    @Override
+    public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+        callback.invoke(origin, true, false);
+        super.onGeolocationPermissionsShowPrompt(origin, callback);
+    }
 
     public final Context getContext()
     {
